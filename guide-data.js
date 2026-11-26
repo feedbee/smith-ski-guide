@@ -1,8 +1,6 @@
 const white = 'https://www.whitesport.pl';
 const blackcomb = 'https://www.blackcomb-shop.pl';
 const whiteMask = white + '/gogle/gogle-smith-4d-mag-';
-const whiteHelmet = white + '/kaski/kask-smith-';
-const mck = 'https://mcksport.pl';
 const smith = 'https://www.smithoptics.com/en-us/products/4d-mag-replacement-lens';
 
 const lensCatalog = [
@@ -25,22 +23,11 @@ const lensCatalog = [
 ];
 
 const offers = [
+  ...helmetInventory,
+  ...mckGoggles,
   { id: 'method-dusk', model: 'Method Pro MIPS', variant: 'Matte Dusk', price: 53800, shop: 'Blackcomb', sizes: ['M'], url: blackcomb + '/kask-smith-method-pro-mips-matte-dusk/' },
-  { id: 'method-white', model: 'Method Pro MIPS', variant: 'Matte Black 2026', price: 55900, shop: 'WhiteSport', sizes: ['XL'], url: white + '/kaski/kask-smith-method-pro-mips-matte-black-2026', local: true },
-  { id: 'method-ironwood', model: 'Method Pro MIPS', variant: 'Matte Ironwood 2026', price: 55900, shop: 'WhiteSport', sizes: ['S', 'M'], url: whiteHelmet + 'method-pro-mips-matte-ironwood-2026', local: true },
-  { id: 'method-cactus', model: 'Method Pro MIPS', variant: 'Matte Cactus Zine 2026', price: 56900, shop: 'WhiteSport', sizes: ['M'], url: whiteHelmet + 'method-pro-mips-matte-cactus-zine-2026', local: true },
-  { id: 'method-grey', model: 'Method Pro MIPS', variant: 'Matte Cirrus Grey 2027', price: 71900, shop: 'WhiteSport', sizes: ['L', 'XL'], url: whiteHelmet + 'method-pro-mips-matte-cirrus-grey-2027', local: true },
   { id: 'method-ski', model: 'Method Pro MIPS', variant: 'Matte Black', price: 59100, shop: 'Skisport', sizes: ['S', 'L', 'XL'], note: '55–59 см — предзаказ на 16 декабря. L указан продавцом как 59–61 см.', url: 'https://skisport.pl/smith-method-pro-mips-kask-narciarski-czarny-25315' },
   { id: 'method-hardloop', model: 'Method Pro MIPS', variant: 'Цвет по карточке', price: 61511, shop: 'Hardloop', sizes: ['S', 'M', 'L'], url: 'https://www.hardloop.pl/oferta/67548-smith-method-pro-mips-kask-narciarski' },
-  { id: 'method-mck', model: 'Method Pro MIPS', variant: 'Matte Black 2027', price: 66900, shop: 'MCK Sport', indexed: true, note: 'Цена в действующем каталоге; карточка товара не открылась.', url: mck + '/tag-produktu/kask-narciarski-smith/', local: true },
-  { id: 'method-white27', model: 'Method Pro MIPS', variant: 'Matte Black 2027', price: 68900, shop: 'WhiteSport', sizes: ['M', 'XL'], url: white + '/kaski/kask-smith-method-pro-mips-matte-black-2027', local: true },
-  { id: 'vantage-thistle', model: 'Vantage 2 MIPS', variant: 'Matte Dusk Thistle 2026', price: 86900, shop: 'WhiteSport', sizes: ['S', 'M'], url: whiteHelmet + 'vantage-2-mips-matte-dusk-thistle-2026', local: true },
-  { id: 'vantage-ironwood', model: 'Vantage 2 MIPS', variant: 'Matte Ironwood / Bandit 2026', price: 86900, shop: 'WhiteSport', sizes: ['M', 'L'], url: whiteHelmet + 'vantage-2-mips-matte-ironwood-bandit-2026', local: true },
-  { id: 'vantage-mystic', model: 'Vantage 2 MIPS', variant: 'Matte Mystic Gold Dust 2026', price: 86900, shop: 'WhiteSport', sizes: ['L'], url: whiteHelmet + 'vantage-2-mips-matte-mystic-gold-dust-2026', local: true },
-  { id: 'vantage-xl', model: 'Vantage 2 MIPS', variant: 'Matte White 2026', price: 92900, shop: 'WhiteSport', sizes: ['XL'], url: white + '/kaski/kask-smith-vantage-2-mips-matte-white-2026', local: true },
-  { id: 'vantage-mck', model: 'Vantage 2 MIPS', variant: 'Matte Black 2026', price: 92900, shop: 'MCK Sport', sizes: ['M', 'L', 'XL'], indexed: true, url: mck + '/kontakt/', local: true },
-  { id: 'vantage-black', model: 'Vantage 2 MIPS', variant: 'Matte Black 2026', price: 98900, shop: 'WhiteSport', sizes: ['M', 'L', 'XL'], url: white + '/kaski/kask-smith-vantage-2-mips-matte-black-2026', local: true },
-  { id: 'vantage-violet', model: 'Vantage 2 MIPS', variant: 'Black / Ultraviolet / Emerald', price: 98900, shop: 'WhiteSport', sizes: ['S', 'L'], url: white + '/kaski/kask-smith-vantage-2-mips-matte-black-ultraviolet-emerald-city-2026', local: true },
   { id: 'vantage-ski', model: 'Vantage 2 MIPS', variant: 'Matte Black', price: 99000, shop: 'Skisport', sizes: ['S', 'M', 'L', 'XL'], url: 'https://skisport.pl/smith-vantage-2-mips-kask-narciarski-czarny-31606' },
   { id: 'vantage-sport', model: 'Vantage 2 MIPS', variant: 'Matte White', price: 99999, shop: 'Sportano', url: 'https://sportano.pl/p/796921/kask-narciarski-smith-vantage-2-mips-matte-white', local: true },
   { id: 'vantage-bc', model: 'Vantage 2 MIPS', variant: 'Black / Ultraviolet / Emerald', price: 100200, shop: 'Blackcomb', sizes: ['S'], url: blackcomb + '/kask-smith-vantage-2-mips-matte-black-ultraviolet-emerald-city/' },
@@ -51,9 +38,7 @@ const offers = [
   { id: 'g-true-blue', model: '4D MAG', variant: 'True Blue Glitch', price: 99900, shop: 'WhiteSport', lenses: ['every-blue', 'storm-blue'], url: whiteMask + 'true-blue-glitch-chromapop-everyday-blue-mirror-dodatkowa-szyba-chromapop-storm-blue-sensor', local: true },
   { id: 'g-ac-markus', model: '4D MAG', variant: 'AC Markus Eder', price: 109900, shop: 'WhiteSport', lenses: ['black', 'storm-blue'], url: whiteMask + 'ac-markus-eder-chromapop-sun-black-dodatkowa-szyba-chromapop-storm-blue-sensor', local: true },
   { id: 'g-photo', model: '4D MAG', variant: 'Black Photochromic 2026', price: 129900, shop: 'WhiteSport', lenses: ['photo-red', 'storm-rose'], url: whiteMask + 'black-chromapop-photochromic-red-mirror-dodatkowa-szyba-chromapop-storm-rose-flash-2026', local: true },
-  { id: 'g-mck-white', model: '4D MAG', variant: 'White Vapor 2022', price: 100000, shop: 'MCK Sport', lenses: ['every-green', 'storm-rose'], url: mck + '/kontakt/', indexed: true, local: true },
   { id: 'g-gold', model: '4D MAG', variant: 'Chalk Space Invader', price: 107700, shop: 'Blackcomb', lenses: ['gold', 'storm-blue'], url: blackcomb + '/gogle-smith-4d-mag-chalk-space-invader-chromapop-sun-black-gold-mirro/' },
-  { id: 'g-mck-black', model: '4D MAG', variant: 'Black 2026', price: 112900, shop: 'MCK Sport', lenses: ['sun-red', 'storm-yellow'], url: mck + '/kontakt/', indexed: true, local: true },
   { id: 'g-red', model: '4D MAG', variant: 'Black', price: 123100, shop: 'Blackcomb', lenses: ['sun-red', 'storm-yellow'], url: blackcomb + '/gogle-smith-4d-mag-black-chromapop-sun-red-mirror1/' },
   { id: 'g-rose', model: '4D MAG', variant: 'White Vapor', price: 123100, shop: 'Blackcomb', lenses: ['rose-gold', 'storm-rose'], url: blackcomb + '/gogle-smith-4d-mag-white-vapor-chromapop-everyday-rose-gold-mirror/' },
   { id: 'g-white', model: '4D MAG', variant: 'Black 2026', price: 129900, shop: 'WhiteSport', lenses: ['every-red', 'storm-yellow'], url: white + '/gogle/gogle-smith-4d-mag-black-chromapop-everyday-red-mirror-dodatkowa-szyba-chromapop-storm-yellow-flash-2026', local: true },

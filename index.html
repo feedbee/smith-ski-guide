@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="assets/leaflet.css">
 <link rel="stylesheet" href="style.css">
 <script src="assets/leaflet.js" defer></script>
+<script src="shop-inventory.js" defer></script>
 <script src="guide-data.js" defer></script>
 <script src="app.js" defer></script>
 </head>
@@ -15,7 +16,7 @@
 <a class="skip" href="#main">К содержанию</a>
 <header class="top"><div class="wrap nav">
 <a class="brand" href="#main">SMITH<span> SKI GUIDE</span></a>
-<nav aria-label="Разделы"><a href="#helmets">Шлемы</a><a href="#goggles">Маска</a><a href="#lenses">Линзы</a><a href="#offers">Цены</a><a href="#stores">Магазины</a></nav>
+<nav aria-label="Разделы"><a href="#helmets">Шлемы</a><a href="#colors">Цвета</a><a href="#goggles">Маска</a><a href="#lenses">Линзы</a><a href="#offers">Цены</a><a href="#stores">Магазины</a></nav>
 <button id="theme" type="button" aria-label="Тёмная тема" aria-pressed="false">◐ <span>Тема</span></button>
 </div></header>
 <main id="main">
@@ -38,6 +39,18 @@
 </div>
 <table><caption>Характеристики шлемов</caption><thead><tr><th scope="col">Параметр</th><th scope="col">Vantage 2</th><th scope="col">Method Pro</th></tr></thead>
 <tbody><tr><th scope="row">Конструкция</th><td>Гибридная оболочка из трёх частей</td><td>In-mold</td></tr><tr><th scope="row">Защита</th><td>MIPS + полное покрытие KOROYD</td><td>MIPS + зональное покрытие KOROYD</td></tr><tr><th scope="row">Вентиляция</th><td>40 отверстий, две регулируемые зоны</td><td>Фиксированная, 8 отверстий по спецификации Smith</td></tr><tr><th scope="row">Посадка</th><td>BOA 360</td><td>Микрорегулировка колёсиком</td></tr><tr><th scope="row">Застёжка</th><td>Магнитная Fidlock</td><td>Магнитная</td></tr><tr><th scope="row">Совместимость с маской</th><td>AirEvac</td><td>AirEvac</td></tr></tbody></table>
+</section>
+<section id="colors">
+<p class="eyebrow">РАСЦВЕТКИ И РАЗМЕРЫ</p><h2>Шлемы в WhiteSport и MCK Sport</h2>
+<p class="intro">Посмотрите, как отличаются матовый чёрный, серый Cirrus Grey и тёмно-синий Royal Navy / Wolf Gray. На каждой карточке указаны цена, доступные онлайн размеры и магазин. Нажмите на фото, чтобы открыть карточку продавца.</p>
+<div class="filters color-filters">
+<label for="color-filter">Расцветка<select id="color-filter"><option value="dark">Чёрные, серые и тёмно-синие</option><option value="black">Только матовый чёрный</option><option value="">Все цвета</option></select></label>
+<label for="color-model">Модель<select id="color-model"><option value="">Обе модели</option><option>Method Pro MIPS</option><option>Vantage 2 MIPS</option></select></label>
+<label for="color-shop">Магазин<select id="color-shop"><option value="">Оба магазина</option><option>WhiteSport</option><option>MCK Sport</option></select></label>
+<label for="color-size">Размер<select id="color-size"><option value="">Все размеры</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label>
+</div>
+<p id="color-count" class="source" role="status"></p>
+<div id="helmet-colors" class="grid helmet-colors"></div>
 </section>
 <section id="goggles" class="card goggles">
 <div class="product-photo"><img src="assets/goggles.png" width="900" height="900" alt="Чёрная маска Smith 4D MAG с красной зеркальной линзой" loading="lazy"></div>
@@ -65,11 +78,12 @@
 </section>
 <section id="offers">
 <p class="eyebrow">ПОКУПКА</p><h2>Где дешевле</h2>
-<p class="intro">Сравнение новых товаров по проверенным польским витринам на 26 ноября 2026 года. Цены в PLN без доставки. Наличие онлайн и остаток в магазине могут отличаться. Цены MCK Sport из каталога и поисковой выдачи требуют звонка и исключены из расчёта.</p>
+<p class="intro">Сравнение новых товаров по проверенным польским витринам на 26 ноября 2026 года. Цены в PLN без доставки. Наличие онлайн и остаток в магазине могут отличаться. Наличие у MCK Sport сверено по каталогу магазина отдельно для каждого размера шлема.</p>
 <div id="deal-highlights" class="grid three"></div>
 <p class="source trip-summary">Для примерки за одну поездку: у WhiteSport Method Pro Matte Ironwood (S/M) или Matte Black (XL) вместе с 4D MAG White Vapor стоят 1 458 zł. Vantage 2 MIPS за 869 zł в S/M/L и та же маска стоят 1 768 zł. Позвоните, чтобы проверить остаток в зале.</p>
 <div class="filters">
 <label for="size">Размер шлема<select id="size"><option value="">Все размеры</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label>
+<label for="offer-shop">Магазин<select id="offer-shop"><option value="">Все магазины</option><option>WhiteSport</option><option>MCK Sport</option></select></label>
 <label class="check"><input id="local-only" type="checkbox"> Только магазины Варшавы</label>
 </div>
 <p id="offers-count" class="source" role="status"></p>
@@ -92,10 +106,10 @@
 <div class="stores"><div class="store-list">
 <article class="card pad"><h3>NartyWarszawa</h3><p>ul. Mangalia 4</p><button type="button" data-store="0" hidden>Показать на карте</button> <a href="https://www.nartywarszawa.pl/kontakt">Контакты</a></article>
 <article class="card pad"><h3>Sportano Targówek</h3><p>ul. Malborska 47</p><button type="button" data-store="1" hidden>Показать на карте</button> <a href="https://sportano.pl/sklep-stacjonarny">Контакты</a></article>
-<article class="card pad"><h3>MCK Sport</h3><p>al. 3 Maja 2 · Powiśle</p><p class="source">Уточните остатки 4D MAG, Vantage 2 MIPS и Method Pro. <a href="tel:+48606236794">606 236 794</a></p><button type="button" data-store="2" hidden>На карте</button> <a href="https://mcksport.pl/kontakt/">Контакты и часы</a></article>
-<article class="card pad"><h3>WhiteSport</h3><p>ul. Ząbkowska 22/24/26, lok. 145 · Praga</p><p class="source">Шлемы, 4D MAG и отдельные линзы. <a href="tel:+48600411663">600 411 663</a></p><button type="button" data-store="3" hidden>На карте</button> <a href="https://www.whitesport.pl/kontakt">Контакты и часы</a></article>
+<article class="card pad"><h3>MCK Sport</h3><p>al. 3 Maja 2 · Powiśle</p><p class="source">Шлемы, маски и линзы. Уточните, что можно примерить. <a href="tel:+48606236794">606 236 794</a></p><button type="button" data-store="2" hidden>На карте</button> <button type="button" data-offer-shop="MCK Sport">Цены MCK Sport</button> <a href="https://mcksport.pl/kontakt/">Контакты и часы</a></article>
+<article class="card pad"><h3>WhiteSport</h3><p>ul. Ząbkowska 22/24/26, lok. 145 · Praga</p><p class="source">Шлемы, 4D MAG и отдельные линзы. <a href="tel:+48600411663">600 411 663</a></p><button type="button" data-store="3" hidden>На карте</button> <button type="button" data-offer-shop="WhiteSport">Цены WhiteSport</button> <a href="https://www.whitesport.pl/kontakt">Контакты и часы</a></article>
 </div><div id="map" role="region" aria-label="Карта магазинов Варшавы"><p>Карта OpenStreetMap загружается.</p></div></div>
 </section>
 </div></main>
-<footer><div class="wrap"><strong>SMITH SKI GUIDE</strong><p>Независимый гид. Фотографии и характеристики моделей предоставлены в каталоге Smith Optics.</p></div></footer>
+<footer><div class="wrap"><strong>SMITH SKI GUIDE</strong><p>Независимый гид. Фотографии моделей из каталогов Smith Optics, WhiteSport и MCK Sport.</p></div></footer>
 </body></html>

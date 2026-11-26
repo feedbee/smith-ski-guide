@@ -25,6 +25,49 @@ const lensById = new Map(lensCatalog.map(lens => [lens.id, lens]));
 const lensRange = lens => lens.max ? lens.min + '–' + lens.max + '%' : lens.min + '%';
 const lensShopUrl = lens => white + '/gogle/szyby-do-gogli/szyby-do-gogli-smith-4d-mag-' + lens.whiteSlug;
 
+const replacementOffers = [
+  ...lensCatalog.filter(lens => lens.price).map(lens => ({
+    id: lens.id, lens: lens.id, price: lens.price, shop: 'WhiteSport', url: lensShopUrl(lens)
+  })),
+  ...mckLenses
+].sort((a, b) => a.price - b.price);
+const replacementById = new Map(replacementOffers.map(offer => [offer.id, offer]));
+const replacementLinks = id => replacementOffers.filter(offer => offer.lens === id)
+  .map(offer => `<a href="${offer.url}">${offer.shop} · ${money(offer.price)}</a>`).join('');
+
+function colorRank(offer) {
+  if (offer.color === 'Матовый чёрный') return 0;
+  if (offer.color === 'Серый') return 1;
+  if (offer.color.startsWith('Чёрный')) return 2;
+  if (offer.color.startsWith('Тёмно-синий')) return 3;
+  return 4;
+}
+
+const colorFilter = document.querySelector('#color-filter');
+const colorModel = document.querySelector('#color-model');
+const colorShop = document.querySelector('#color-shop');
+const colorSize = document.querySelector('#color-size');
+const colorGallery = document.querySelector('#helmet-colors');
+
+function renderColors() {
+  const eligible = helmetInventory.filter(offer => (
+    (!colorFilter.value || colorRank(offer) <= (colorFilter.value === 'black' ? 0 : 3)) &&
+    (!colorModel.value || offer.model === colorModel.value) &&
+    (!colorShop.value || offer.shop === colorShop.value) &&
+    (!colorSize.value || offer.sizes.includes(colorSize.value))
+  )).sort((a, b) => colorRank(a) - colorRank(b) || a.price - b.price);
+  document.querySelector('#color-count').textContent = 'Подходящих вариантов: ' + eligible.length + '.';
+  colorGallery.innerHTML = eligible.length ? eligible.map(offer => `<article class="card helmet-color">
+    <a href="${offer.url}" aria-label="${offer.model}, ${offer.variant}, карточка ${offer.shop}"><img src="${offer.photo}" alt="${offer.model} — ${offer.variant}" width="460" height="460" loading="lazy"></a>
+    <div><p class="eyebrow">${offer.model}</p><h3>${offer.variant}</h3>
+    ${offer.color ? `<p class="source">${offer.color}</p>` : ''}
+    <p class="source">Онлайн: ${offer.sizes.join(', ')}</p>
+    <a class="color-price" href="${offer.url}"><span>${offer.shop}</span><strong>${money(offer.price)}</strong></a></div></article>`).join('')
+    : '<p>По выбранным параметрам шлемов в наличии нет.</p>';
+}
+[colorFilter, colorModel, colorShop, colorSize].forEach(filter => filter.addEventListener('change', renderColors));
+renderColors();
+
 const chart = document.querySelector('#lens-chart');
 const slider = document.querySelector('#vlt');
 const chartRows = document.querySelector('#lens-rows');
@@ -41,7 +84,7 @@ chartRows.innerHTML = lensCatalog.map(lens => {
 lensCards.innerHTML = lensCatalog.map(lens => `<article id="lens-${lens.id}" class="card lens-card">
   <button type="button" data-chart-lens="${lens.id}" aria-label="Показать ${lens.name}, VLT ${lensRange(lens)} на графике"><img src="assets/lenses/${lens.id}.png" alt="" width="300" height="300" loading="lazy"></button>
   <div><h4>${lens.name}</h4><p><strong>${lensRange(lens)} VLT</strong> · ${lens.family}${lens.note ? ' · ' + lens.note : ''}</p>
-  ${lens.price ? `<a href="${lensShopUrl(lens)}">WhiteSport · ${money(lens.price)}</a>` : '<span class="source">Отдельная цена в Польше не подтверждена</span>'}
+  ${replacementLinks(lens.id) || '<span class="source">Отдельная цена в Польше не подтверждена</span>'}
   <a class="source" href="${smith}?variant=${lens.variant}">Артикул Smith</a></div></article>`).join('');
 
 function updateLens() {
@@ -70,6 +113,7 @@ updateLens();
 
 const sizeFilter = document.querySelector('#size');
 const localFilter = document.querySelector('#local-only');
+const offerShop = document.querySelector('#offer-shop');
 const dealTables = document.querySelector('#deal-tables');
 const models = ['Method Pro MIPS', 'Vantage 2 MIPS', '4D MAG'];
 const helmet = document.querySelector('#helmet');
@@ -93,9 +137,9 @@ function fillSelect(select, choices, emptyLabel) {
 }
 
 function renderOffers() {
-  const shown = offers.filter(offer => (!localFilter.checked || offer.local) &&
+  const shown = offers.filter(offer => (!localFilter.checked || offer.local) && (!offerShop.value || offer.shop === offerShop.value) &&
     (!sizeFilter.value || offer.model === '4D MAG' || offer.sizes?.includes(sizeFilter.value)));
-  const confirmed = shown.filter(offer => !offer.indexed);
+  const confirmed = shown;
   document.querySelector('#deal-highlights').innerHTML = models.map(model => {
     const cheapest = confirmed.find(offer => offer.model === model);
     return `<article class="card pad offer highlight"><h3>${model}</h3>${cheapest
@@ -106,9 +150,9 @@ function renderOffers() {
     const matching = shown.filter(offer => offer.model === model);
     return `<section class="deal-group"><h3>${model}</h3>${matching.length ? `<ul class="deal-list">${matching.map(offer =>
       `<li class="card deal-row">
-      <div><a class="deal-shop" href="${offer.url}">${offer.shop}${offer.indexed ? ' · контакты' : ''}</a><span class="deal-variant">${offer.variant}</span></div>
+      <div><a class="deal-shop" href="${offer.url}">${offer.shop}</a><span class="deal-variant">${offer.variant}</span></div>
       <div class="deal-details">${offerDetails(offer)}</div>
-      <div class="deal-price"><strong>${money(offer.price)}</strong><span>${offer.indexed ? 'Уточнить по телефону' : offer.local ? 'Магазин в Варшаве · уточнить остаток' : 'Онлайн'}</span></div>
+      <div class="deal-price"><strong>${money(offer.price)}</strong><span>${offer.local ? 'Магазин в Варшаве · уточнить остаток' : 'Онлайн'}</span></div>
       </li>`).join('')}</ul>` : '<p>Нет предложений по этим фильтрам.</p>'}</section>`;
   }).join('');
   document.querySelector('#offers-count').textContent =
@@ -119,30 +163,44 @@ function renderOffers() {
   }));
   fillSelect(helmet, options(confirmed.filter(offer => offer.model !== '4D MAG')), 'Без шлема');
   fillSelect(goggles, options(confirmed.filter(offer => offer.model === '4D MAG')), 'Без маски');
+  const matchingLenses = replacementOffers.filter(offer => !offerShop.value || offer.shop === offerShop.value);
+  dealTables.insertAdjacentHTML('beforeend', `<section class="deal-group"><h3>Отдельные линзы 4D MAG</h3>
+    <ul class="deal-list">${matchingLenses.map(offer => `<li class="card deal-row">
+      <a class="deal-shop" href="${offer.url}">${offer.shop}</a>
+      <div class="deal-details"><a href="#lens-${offer.lens}">${lensById.get(offer.lens).name}</a></div>
+      <div class="deal-price"><strong>${money(offer.price)}</strong></div>
+    </li>`).join('')}</ul></section>`);
+  const previousLens = extraLens.value;
+  fillSelect(extraLens, matchingLenses.map(offer => ({
+    id: offer.id, label: lensById.get(offer.lens).name + ' · ' + offer.shop + ' — ' + money(offer.price)
+  })), 'Без дополнительной линзы');
+  if (!matchingLenses.some(offer => offer.id === previousLens)) extraLens.value = '';
   updateTotal();
 }
 
 function updateTotal() {
   const selected = [offerById.get(helmet.value), offerById.get(goggles.value)];
-  const lens = lensById.get(extraLens.value);
-  const grosz = selected.reduce((sum, offer) => sum + (offer?.price ?? 0), lens?.price ?? 0);
+  const lensOffer = replacementById.get(extraLens.value);
+  const lens = lensById.get(lensOffer?.lens);
+  const grosz = selected.reduce((sum, offer) => sum + (offer?.price ?? 0), lensOffer?.price ?? 0);
   document.querySelector('#total').value = money(grosz);
   const items = selected.filter(Boolean).map(offer => offer.model + ' · ' + offer.shop);
-  if (lens) items.push(lens.name + ' · WhiteSport');
+  if (lens) items.push(lens.name + ' · ' + lensOffer.shop);
   document.querySelector('#kit-detail').textContent = items.length ? items.join(' + ') : 'Комплект пока пуст.';
   const duplicate = document.querySelector('#duplicate-lens');
   duplicate.hidden = !selected[1]?.lenses.includes(lens?.id);
   duplicate.textContent = duplicate.hidden ? '' : 'Эта линза уже указана в комплектации маски.';
 }
 
-fillSelect(extraLens, lensCatalog.filter(lens => lens.price)
-  .sort((a, b) => a.price - b.price)
-  .map(lens => ({ id: lens.id, label: lens.name + ' · WhiteSport — ' + money(lens.price) })),
-'Без дополнительной линзы');
-extraLens.value = '';
 document.querySelector('#kit').addEventListener('change', updateTotal);
 sizeFilter.addEventListener('change', renderOffers);
 localFilter.addEventListener('change', renderOffers);
+offerShop.addEventListener('change', renderOffers);
+document.querySelectorAll('[data-offer-shop]').forEach(button => button.addEventListener('click', () => {
+  offerShop.value = button.dataset.offerShop;
+  renderOffers();
+  document.querySelector('#offers').scrollIntoView();
+}));
 renderOffers();
 
 const mapContainer = document.querySelector('#map');
