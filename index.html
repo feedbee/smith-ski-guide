@@ -8,20 +8,21 @@
 <link rel="stylesheet" href="assets/leaflet.css">
 <link rel="stylesheet" href="style.css">
 <script src="assets/leaflet.js" defer></script>
+<script src="guide-data.js" defer></script>
 <script src="app.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">К содержанию</a>
 <header class="top"><div class="wrap nav">
 <a class="brand" href="#main">SMITH<span> SKI GUIDE</span></a>
-<nav aria-label="Разделы"><a href="#helmets">Шлемы</a><a href="#goggles">Маска</a><a href="#lenses">Линзы</a><a href="#stores">Магазины</a></nav>
+<nav aria-label="Разделы"><a href="#helmets">Шлемы</a><a href="#goggles">Маска</a><a href="#lenses">Линзы</a><a href="#offers">Цены</a><a href="#stores">Магазины</a></nav>
 <button id="theme" type="button" aria-label="Тёмная тема" aria-pressed="false">◐ <span>Тема</span></button>
 </div></header>
 <main id="main">
 <section class="hero"><div class="wrap hero-copy">
 <p class="eyebrow">ЭКИПИРОВКА · ВАРШАВА</p>
 <h1>Smith<br>Ski Guide<span>.</span></h1>
-<p>Два шлема, маска 4D MAG и четыре линзы для разных условий на склоне.</p>
+<p>Два шлема, маска 4D MAG и сменные линзы. Сравните цены и найдите, где примерить комплект в Варшаве.</p>
 <div class="actions"><a class="btn" href="#helmets">Сравнить шлемы</a><a class="btn ghost" href="#calculator">Собрать комплект</a></div>
 </div></section>
 <div class="wrap">
@@ -47,37 +48,43 @@
 <a href="https://www.smithoptics.com/en-us/products/4d-mag">Комплектация у Smith</a></div>
 </section>
 <section id="lenses">
-<p class="eyebrow">СВЕТОПРОПУСКАНИЕ</p><h2>Четыре линзы ChromaPop</h2>
-<p class="intro">VLT показывает, сколько видимого света пропускает линза. Чем выше процент, тем светлее линза. Выберите линзу или переместите ползунок для сравнения.</p>
+<p class="eyebrow">СВЕТОПРОПУСКАНИЕ</p><h2>Линзы для 4D MAG</h2>
+<p class="intro">Чем выше VLT, тем больше света пропускает линза. Короткая отметка показывает фиксированное значение, полоска — диапазон фотохромной линзы. Вертикальный указатель можно двигать ползунком. Нажмите на название или фотографию линзы, чтобы посмотреть цену.</p>
 <div class="card pad vlt">
-<label for="vlt">Светопропускание</label> <output id="vlt-value" for="vlt">25%</output>
+<label for="vlt">Указатель VLT</label> <output id="vlt-value" for="vlt">25%</output>
 <input id="vlt" type="range" min="0" max="100" value="25">
-<div class="ends"><span>0% · меньше света</span><span>100% · больше света</span></div>
-<p id="lens-result" role="status">Ближайшая линза — Everyday Red Mirror (25%).</p>
-<div class="grid lenses">
-<button class="lens" data-vlt="9" type="button" aria-pressed="false" style="--tint:#74e0ad"><b>09%</b><strong>Sun Green Mirror</strong><span>Яркое солнце</span></button>
-<button class="lens" data-vlt="25" type="button" aria-pressed="true" style="--tint:#ff9a76"><b>25%</b><strong>Everyday Red Mirror</strong><span>Солнце и облака</span></button>
-<button class="lens" data-vlt="50" type="button" aria-pressed="false" style="--tint:#eaa8c5"><b>50%</b><strong>Storm Rose Flash</strong><span>Пасмурно</span></button>
-<button class="lens" data-vlt="65" type="button" aria-pressed="false" style="--tint:#f8dd76"><b>65%</b><strong>Storm Yellow Flash</strong><span>Снегопад и плоский свет</span></button>
+<p id="lens-result" class="lens-result" role="status"></p>
+<div id="lens-chart" class="lens-chart" aria-label="График светопропускания линз">
+<div class="chart-axis" aria-hidden="true"><span>Линза</span><div><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>
+<div id="lens-rows" class="lens-rows"></div></div>
+<p class="source">Значения VLT могут различаться по модели и сезону. <a href="https://smithjapan.co.jp/technology/snow-goggle-technology/chromapop/">Таблица Smith Japan</a> · <a href="https://www.smithoptics.com/en-us/products/4d-mag-replacement-lens">Фотографии и артикулы Smith</a></p>
 </div>
-<p class="source"><a href="https://www.smithoptics.com/en-us/blogs/blog/building-your-goggle-lens-toolkit">Руководство Smith по линзам</a> · <a href="https://www.vita.si/storage/_sites/vitakorpo/app/media/Katalogi/Smith/eng2627emeasmithsnowcatalog12222025-1compressed.pdf">Каталог Smith EMEA</a></p>
-</div>
+<h3 class="lens-subhead">Фотографии и цены отдельных линз</h3>
+<p class="intro">Цены на линзы указаны отдельно от маски. Перед заказом проверьте, что в карточке указана обычная 4D MAG. У версий S и XL другая форма линзы.</p>
+<div id="lens-cards" class="grid lens-cards"></div>
 </section>
 <section id="offers">
-<p class="eyebrow">ПОКУПКА</p><h2>Цены и комплектации</h2>
-<p class="intro">Проверено 26 ноября 2026 года. Цены без доставки. Перед покупкой проверьте остаток нужного размера и итоговую цену в магазине.</p>
-<div class="grid three">
-<article class="card pad offer"><h3>Vantage 2 MIPS</h3><p>Matte White · шлем</p><strong>999,99 zł</strong><p>Sportano показывает наличие отдельных размеров онлайн. Остаток в Варшаве уточняйте по размеру.</p><a href="https://sportano.pl/p/796921/kask-narciarski-smith-vantage-2-mips-matte-white">Карточка Sportano</a></article>
-<article class="card pad offer"><h3>Method Pro MIPS</h3><p>Matte Dusk · шлем</p><strong>538 zł</strong><p>Blackcomb Shop отмечает товар в наличии. На витрине цена округлена до целых злотых.</p><a href="https://www.blackcomb-shop.pl/kask-smith-method-pro-mips-matte-dusk/">Карточка Blackcomb</a></article>
-<article class="card pad offer"><h3>4D MAG</h3><p>Terra Flow 2023 · Everyday Red Mirror</p><strong>1 303,20 zł</strong><p>NartyWarszawa отмечает комплект в наличии. Название запасной линзы уточняйте у продавца.</p><a href="https://www.nartywarszawa.pl/gogle-smith-4d-mag-terra-flow-2023-chromapop-everyday-red-mirrors2.html?id=32522">Карточка NartyWarszawa</a></article>
+<p class="eyebrow">ПОКУПКА</p><h2>Где дешевле</h2>
+<p class="intro">Сравнение новых товаров по проверенным польским витринам на 26 ноября 2026 года. Цены в PLN без доставки. Наличие онлайн и остаток в магазине могут отличаться. Цены MCK Sport из каталога и поисковой выдачи требуют звонка и исключены из расчёта.</p>
+<div id="deal-highlights" class="grid three"></div>
+<p class="source trip-summary">Для примерки за одну поездку: у WhiteSport Method Pro Matte Ironwood (S/M) или Matte Black (XL) вместе с 4D MAG White Vapor стоят 1 458 zł. Vantage 2 MIPS за 869 zł в S/M/L и та же маска стоят 1 768 zł. Позвоните, чтобы проверить остаток в зале.</p>
+<div class="filters">
+<label for="size">Размер шлема<select id="size"><option value="">Все размеры</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></label>
+<label class="check"><input id="local-only" type="checkbox"> Только магазины Варшавы</label>
 </div>
-<p class="source">Фотографии в обзоре показывают модели в других расцветках.</p>
+<p id="offers-count" class="source" role="status"></p>
+<div id="deal-tables"></div>
+<noscript><p>Для сравнения цен и работы калькулятора включите JavaScript.</p></noscript>
 </section>
 <section id="calculator" class="calculator card pad">
-<div><p class="eyebrow">БЮДЖЕТ</p><h2>Соберите комплект</h2><p>Выберите шлем и добавьте маску. Итог рассчитан по ценам выше.</p></div>
-<form id="kit"><label for="helmet">Шлем</label><select id="helmet"><option value="99999">Vantage 2 MIPS — 999,99 zł</option><option value="53800">Method Pro MIPS — 538 zł</option><option value="0">Без шлема</option></select>
-<label class="check"><input id="with-goggles" type="checkbox" checked> Smith 4D MAG — 1 303,20 zł</label>
-<label for="total">Итого без доставки</label><output id="total" for="helmet with-goggles" aria-live="polite">2 303,19 zł</output></form>
+<div><p class="eyebrow">БЮДЖЕТ</p><h2>Соберите комплект</h2><p>При открытии выбраны самые дешёвые подтверждённые шлем и маска. Стартовый шлем доступен в M (55–59 см). Укажите свой размер в разделе цен, чтобы подобрать покупку.</p><p id="kit-detail" class="source"></p></div>
+<form id="kit">
+<label for="helmet">Шлем</label><select id="helmet"></select>
+<label for="kit-goggles">Маска с линзами</label><select id="kit-goggles"></select>
+<label for="extra-lens">Дополнительная линза</label><select id="extra-lens"></select>
+<p id="duplicate-lens" class="source" hidden></p>
+<label for="total">Итого без доставки</label><output id="total" for="helmet kit-goggles extra-lens" aria-live="polite"></output>
+</form>
 </section>
 <section id="stores">
 <p class="eyebrow">САМОВЫВОЗ И ПРИМЕРКА</p><h2>Магазины в Варшаве</h2>
@@ -85,6 +92,8 @@
 <div class="stores"><div class="store-list">
 <article class="card pad"><h3>NartyWarszawa</h3><p>ul. Mangalia 4</p><button type="button" data-store="0" hidden>Показать на карте</button> <a href="https://www.nartywarszawa.pl/kontakt">Контакты</a></article>
 <article class="card pad"><h3>Sportano Targówek</h3><p>ul. Malborska 47</p><button type="button" data-store="1" hidden>Показать на карте</button> <a href="https://sportano.pl/sklep-stacjonarny">Контакты</a></article>
+<article class="card pad"><h3>MCK Sport</h3><p>al. 3 Maja 2 · Powiśle</p><p class="source">Уточните остатки 4D MAG, Vantage 2 MIPS и Method Pro. <a href="tel:+48606236794">606 236 794</a></p><button type="button" data-store="2" hidden>На карте</button> <a href="https://mcksport.pl/gdzie-nas-znajdziesz/">Контакты и часы</a></article>
+<article class="card pad"><h3>WhiteSport</h3><p>ul. Ząbkowska 22/24/26, lok. 145 · Praga</p><p class="source">Шлемы, 4D MAG и отдельные линзы. <a href="tel:+48600411663">600 411 663</a></p><button type="button" data-store="3" hidden>На карте</button> <a href="https://www.whitesport.pl/kontakt">Контакты и часы</a></article>
 </div><div id="map" role="region" aria-label="Карта магазинов Варшавы"><p>Карта OpenStreetMap загружается.</p></div></div>
 </section>
 </div></main>
