@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Сравнение шлемов Smith, маски 4D MAG и линз ChromaPop. Цены, магазины Варшавы и калькулятор комплекта.">
+<title>Smith Ski Guide — экипировка для склона</title>
+<link rel="stylesheet" href="assets/leaflet.css">
+<link rel="stylesheet" href="style.css">
+<script src="assets/leaflet.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+<header class="top"><div class="wrap nav">
+<a class="brand" href="#main">SMITH<span> SKI GUIDE</span></a>
+<nav aria-label="Разделы"><a href="#helmets">Шлемы</a><a href="#goggles">Маска</a><a href="#lenses">Линзы</a><a href="#stores">Магазины</a></nav>
+<button id="theme" type="button" aria-label="Тёмная тема" aria-pressed="false">◐ <span>Тема</span></button>
+</div></header>
+<main id="main">
+<section class="hero"><div class="wrap hero-copy">
+<p class="eyebrow">ЭКИПИРОВКА · ВАРШАВА</p>
+<h1>Smith<br>Ski Guide<span>.</span></h1>
+<p>Два шлема, маска 4D MAG и четыре линзы для разных условий на склоне.</p>
+<div class="actions"><a class="btn" href="#helmets">Сравнить шлемы</a><a class="btn ghost" href="#calculator">Собрать комплект</a></div>
+</div></section>
+<div class="wrap">
+<section id="helmets">
+<p class="eyebrow">ЗАЩИТА</p><h2>Выберите шлем</h2>
+<div class="grid two">
+<article class="card"><div class="product-photo"><img src="assets/vantage.png" width="720" height="720" alt="Smith Vantage 2 MIPS в тёмно-синем цвете" loading="lazy"></div><div class="pad">
+<p class="eyebrow">ALL-MOUNTAIN</p><h3>Vantage 2 MIPS</h3><p>Для тех, кто хочет управлять вентиляцией в течение дня. Верх и боковые зоны регулируются независимо.</p>
+<a href="https://www.smithoptics.com/en-us/products/vantage-2-mips-r">Характеристики Smith</a></div></article>
+<article class="card"><div class="product-photo secondary"><img src="assets/method.png" width="720" height="720" alt="Smith Method Pro MIPS в белом цвете" loading="lazy"></div><div class="pad">
+<p class="eyebrow">ПАРК И ТРАССА</p><h3>Method Pro MIPS</h3><p>Низкопрофильный шлем со съёмными амбушюрами и фиксированной вентиляцией.</p>
+<a href="https://www.smithoptics.com/en-gb/products/method-pro-mips-r">Характеристики Smith</a></div></article>
+</div>
+<table><caption>Характеристики шлемов</caption><thead><tr><th scope="col">Параметр</th><th scope="col">Vantage 2</th><th scope="col">Method Pro</th></tr></thead>
+<tbody><tr><th scope="row">Конструкция</th><td>Гибридная оболочка из трёх частей</td><td>In-mold</td></tr><tr><th scope="row">Защита</th><td>MIPS + полное покрытие KOROYD</td><td>MIPS + зональное покрытие KOROYD</td></tr><tr><th scope="row">Вентиляция</th><td>40 отверстий, две регулируемые зоны</td><td>Фиксированная, 8 отверстий по спецификации Smith</td></tr><tr><th scope="row">Посадка</th><td>BOA 360</td><td>Микрорегулировка колёсиком</td></tr><tr><th scope="row">Застёжка</th><td>Магнитная Fidlock</td><td>Магнитная</td></tr><tr><th scope="row">Совместимость с маской</th><td>AirEvac</td><td>AirEvac</td></tr></tbody></table>
+</section>
+<section id="goggles" class="card goggles">
+<div class="product-photo"><img src="assets/goggles.png" width="900" height="900" alt="Чёрная маска Smith 4D MAG с красной зеркальной линзой" loading="lazy"></div>
+<div class="pad"><p class="eyebrow">ОПТИКА</p><h2>Smith 4D MAG</h2>
+<p>Нижний изгиб линзы BirdsEye Vision расширяет поле зрения вниз. По данным Smith, суммарный обзор на 25% шире, чем у других сферических линз бренда.</p>
+<p>Магниты Smith MAG помогают совместить линзу с оправой, а фиксаторы удерживают её на месте. Посадка среднего размера.</p>
+<p>Smith указывает две линзы ChromaPop, жёсткий футляр и мешочек с отделением для запасной линзы. Цвет и пара линз зависят от артикула.</p>
+<a href="https://www.smithoptics.com/en-us/products/4d-mag">Комплектация у Smith</a></div>
+</section>
+<section id="lenses">
+<p class="eyebrow">СВЕТОПРОПУСКАНИЕ</p><h2>Четыре линзы ChromaPop</h2>
+<p class="intro">VLT показывает, сколько видимого света пропускает линза. Чем выше процент, тем светлее линза. Выберите линзу или переместите ползунок для сравнения.</p>
+<div class="card pad vlt">
+<label for="vlt">Светопропускание</label> <output id="vlt-value" for="vlt">25%</output>
+<input id="vlt" type="range" min="0" max="100" value="25">
+<div class="ends"><span>0% · меньше света</span><span>100% · больше света</span></div>
+<p id="lens-result" role="status">Ближайшая линза — Everyday Red Mirror (25%).</p>
+<div class="grid lenses">
+<button class="lens" data-vlt="9" type="button" aria-pressed="false" style="--tint:#74e0ad"><b>09%</b><strong>Sun Green Mirror</strong><span>Яркое солнце</span></button>
+<button class="lens" data-vlt="25" type="button" aria-pressed="true" style="--tint:#ff9a76"><b>25%</b><strong>Everyday Red Mirror</strong><span>Солнце и облака</span></button>
+<button class="lens" data-vlt="50" type="button" aria-pressed="false" style="--tint:#eaa8c5"><b>50%</b><strong>Storm Rose Flash</strong><span>Пасмурно</span></button>
+<button class="lens" data-vlt="65" type="button" aria-pressed="false" style="--tint:#f8dd76"><b>65%</b><strong>Storm Yellow Flash</strong><span>Снегопад и плоский свет</span></button>
+</div>
+<p class="source"><a href="https://www.smithoptics.com/en-us/blogs/blog/building-your-goggle-lens-toolkit">Руководство Smith по линзам</a> · <a href="https://www.vita.si/storage/_sites/vitakorpo/app/media/Katalogi/Smith/eng2627emeasmithsnowcatalog12222025-1compressed.pdf">Каталог Smith EMEA</a></p>
+</div>
+</section>
+<section id="offers">
+<p class="eyebrow">ПОКУПКА</p><h2>Цены и комплектации</h2>
+<p class="intro">Проверено 26 ноября 2026 года. Цены без доставки. Перед покупкой проверьте остаток нужного размера и итоговую цену в магазине.</p>
+<div class="grid three">
+<article class="card pad offer"><h3>Vantage 2 MIPS</h3><p>Matte White · шлем</p><strong>999,99 zł</strong><p>Sportano показывает наличие отдельных размеров онлайн. Остаток в Варшаве уточняйте по размеру.</p><a href="https://sportano.pl/p/796921/kask-narciarski-smith-vantage-2-mips-matte-white">Карточка Sportano</a></article>
+<article class="card pad offer"><h3>Method Pro MIPS</h3><p>Matte Dusk · шлем</p><strong>538 zł</strong><p>Blackcomb Shop отмечает товар в наличии. На витрине цена округлена до целых злотых.</p><a href="https://www.blackcomb-shop.pl/kask-smith-method-pro-mips-matte-dusk/">Карточка Blackcomb</a></article>
+<article class="card pad offer"><h3>4D MAG</h3><p>Terra Flow 2023 · Everyday Red Mirror</p><strong>1 303,20 zł</strong><p>NartyWarszawa отмечает комплект в наличии. Название запасной линзы уточняйте у продавца.</p><a href="https://www.nartywarszawa.pl/gogle-smith-4d-mag-terra-flow-2023-chromapop-everyday-red-mirrors2.html?id=32522">Карточка NartyWarszawa</a></article>
+</div>
+<p class="source">Фотографии в обзоре показывают модели в других расцветках.</p>
+</section>
+<section id="calculator" class="calculator card pad">
+<div><p class="eyebrow">БЮДЖЕТ</p><h2>Соберите комплект</h2><p>Выберите шлем и добавьте маску. Итог рассчитан по ценам выше.</p></div>
+<form id="kit"><label for="helmet">Шлем</label><select id="helmet"><option value="99999">Vantage 2 MIPS — 999,99 zł</option><option value="53800">Method Pro MIPS — 538 zł</option><option value="0">Без шлема</option></select>
+<label class="check"><input id="with-goggles" type="checkbox" checked> Smith 4D MAG — 1 303,20 zł</label>
+<label for="total">Итого без доставки</label><output id="total" for="helmet with-goggles" aria-live="polite">2 303,19 zł</output></form>
+</section>
+<section id="stores">
+<p class="eyebrow">САМОВЫВОЗ И ПРИМЕРКА</p><h2>Магазины в Варшаве</h2>
+<p class="intro">Выберите магазин, чтобы открыть его точку на карте. Перед поездкой уточните наличие нужной модели.</p>
+<div class="stores"><div class="store-list">
+<article class="card pad"><h3>NartyWarszawa</h3><p>ul. Mangalia 4</p><button type="button" data-store="0" hidden>Показать на карте</button> <a href="https://www.nartywarszawa.pl/kontakt">Контакты</a></article>
+<article class="card pad"><h3>Sportano Targówek</h3><p>ul. Malborska 47</p><button type="button" data-store="1" hidden>Показать на карте</button> <a href="https://sportano.pl/sklep-stacjonarny">Контакты</a></article>
+</div><div id="map" role="region" aria-label="Карта магазинов Варшавы"><p>Карта OpenStreetMap загружается.</p></div></div>
+</section>
+</div></main>
+<footer><div class="wrap"><strong>SMITH SKI GUIDE</strong><p>Независимый гид. Фотографии и характеристики моделей предоставлены в каталоге Smith Optics.</p></div></footer>
+</body></html>
